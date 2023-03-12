@@ -40,10 +40,7 @@ public:
         , size_(size)
         , capacity_(size)
     {
-        for (size_t i = 0; i < size; ++i)
-        {
-            array_vector_[i] = value;
-        }
+        std::fill_n(begin(), size, value);
     }
 
     // Создаёт вектор из std::initializer_list
@@ -120,12 +117,14 @@ public:
     // Возвращает ссылку на элемент с индексом index
     Type& operator[](size_t index) noexcept
     {
+        assert(index < size_);
         return array_vector_[index];
     }
 
     // Возвращает константную ссылку на элемент с индексом index
     const Type& operator[](size_t index) const noexcept
     {
+        assert(index < size_);
         return array_vector_[index];
     }
 
@@ -281,6 +280,7 @@ public:
 
     Iterator Erase(ConstIterator pos) 
     {
+        assert(pos >= begin() && pos < end());
         std::move(std::next(Iterator(pos)), end(), Iterator(pos));
         --size_;
         return Iterator(pos);

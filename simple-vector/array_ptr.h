@@ -47,6 +47,7 @@ public:
         {
             swap(other);
         }
+        return *this;
     };
 
     ~ArrayPtr()
@@ -97,9 +98,7 @@ public:
     // Обменивается значениям указателя на массив с объектом other
     void swap(ArrayPtr& other) noexcept
     {
-        Type* tmp = raw_ptr_;
-        raw_ptr_ = other.Get();
-        other.raw_ptr_ = tmp;
+        std::swap(raw_ptr_, other.raw_ptr_);
     }
 
 private:
